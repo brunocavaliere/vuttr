@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  modalTool: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,15 +16,42 @@ export const Container = styled.div`
 
   background: rgba(0, 0, 0, 0.64);
 
+  animation: bgOpacity 0.5s;
+
+  @keyframes bgOpacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   form {
     max-width: 570px;
     width: 100%;
+    z-index: 10;
 
     padding: 32px 64px;
 
     background: var(--White);
     border: 1px solid var(--DarkestWhite);
     border-radius: 5px;
+
+    ${props =>
+      props.modalTool &&
+      css`
+        animation: modalUpToDown 1s;
+
+        @keyframes modalUpToDown {
+          from {
+            margin-top: -100%;
+          }
+          to {
+            margin-top: 0;
+          }
+        }
+      `}
 
     nav {
       display: flex;
@@ -52,7 +83,7 @@ export const Container = styled.div`
       }
 
       &:hover svg {
-        transform: rotate(45deg);
+        transform: rotate(90deg);
       }
     }
 

@@ -4,7 +4,12 @@ import api from '../services/api';
 
 import { Container } from '../styles/components/ModalAddTools';
 
-export default function ModalAddTool() {
+interface Props {
+  modalTool: boolean;
+  handleModal: () => void;
+}
+
+export default function ModalAddTool({ modalTool, handleModal }: Props) {
   const [inputData, setInputData] = useState({
     title: '',
     link: '',
@@ -43,12 +48,12 @@ export default function ModalAddTool() {
   }
 
   return (
-    <Container>
+    <Container modalTool={modalTool}>
       <form onSubmit={handleAddTool}>
         <nav>
           <h3>Add new tool</h3>
 
-          <button type="button">
+          <button onClick={handleModal} type="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="61.414"

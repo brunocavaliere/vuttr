@@ -28,7 +28,7 @@ export const Nav = styled.div`
     max-width: 360px;
     width: 100%;
 
-    padding: 16px;
+    padding: 16px 32px;
 
     border: 1px solid var(--DarkestWhite);
     border-radius: 5px;
@@ -42,7 +42,7 @@ export const Nav = styled.div`
   }
 
   button {
-    padding: 14px 26px;
+    padding: 16px 32px;
 
     background: var(--Blue);
 
@@ -65,7 +65,7 @@ export const Nav = styled.div`
 `;
 
 export const Tools = styled.div`
-  padding: 16px;
+  padding: 32px;
   margin-bottom: 32px;
 
   background: var(--White);
@@ -77,7 +77,7 @@ export const Tools = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 
     h5 {
       font: var(--Header5);

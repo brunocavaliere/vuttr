@@ -25,9 +25,9 @@ export default function Home() {
     }
 
     loadTools();
-  }, [tools]);
+  }, []);
 
-  function handleModalTool(): void {
+  function handleModalTool() {
     setModalTool(!modalTool);
   }
 
@@ -39,7 +39,9 @@ export default function Home() {
 
   return (
     <>
-      {modalTool && <ModalAddTool />}
+      {modalTool && (
+        <ModalAddTool modalTool={modalTool} handleModal={handleModalTool} />
+      )}
 
       <Container>
         <h1>VUTTR!</h1>
