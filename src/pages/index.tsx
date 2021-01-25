@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 
+import ModalAddTool from '../components/ModalAddTool';
+
 import { Container, Nav, Tools } from '../styles/pages/Home';
 
 interface Tool {
@@ -13,6 +15,7 @@ interface Tool {
 
 export default function Home() {
   const [tools, setTools] = useState<Tool[]>([]);
+  const [modalTool, setModalTool] = useState(false);
 
   useEffect(() => {
     async function loadTools(): Promise<void> {
@@ -22,34 +25,57 @@ export default function Home() {
     }
 
     loadTools();
-  }, []);
+  }, [tools]);
+
+  function handleModalTool(): void {
+    setModalTool(!modalTool);
+  }
+
+  async function handleDeleteTool(id: number): Promise<void> {
+    await api.delete(`/tools/${id}`);
+
+    setTools(tools.filter(tool => tool.id !== id));
+  }
 
   return (
-    <Container>
-      <h1>VUTTR!</h1>
+    <>
+      {modalTool && <ModalAddTool />}
 
-      <h3>Very Useful Tools to Remember</h3>
+      <Container>
+        <h1>VUTTR!</h1>
 
-      <Nav>
-        <input type="text" placeholder="search" />
+        <h3>Very Useful Tools to Remember</h3>
 
-        <button type="button">Add</button>
-      </Nav>
+        <Nav>
+          <input type="text" placeholder="search" />
 
-      {tools.map(tool => (
-        <Tools>
-          <header key={tool.title}>
-            <h5>
-              <a href="teste">{tool.title}</a>
-            </h5>
+          <button onClick={handleModalTool} type="button">
+            Add
+          </button>
+        </Nav>
 
-            <button type="button">remove</button>
-          </header>
+        {tools.map(tool => (
+          <Tools>
+            <header key={tool.title}>
+              <h5>
+                <a href="teste">{tool.title}</a>
+              </h5>
 
-          <p>{tool.description}</p>
-          <p>{tool.tags}</p>
-        </Tools>
-      ))}
-    </Container>
+              <button onClick={() => handleDeleteTool(tool.id)} type="button">
+                remove
+              </button>
+            </header>
+
+            <p>{tool.description}</p>
+            <div>
+              {tool.tags &&
+                tool.tags.map((tag, index) => (
+                  <span key={index}>{`#${tag}`}</span>
+                ))}
+            </div>
+          </Tools>
+        ))}
+      </Container>
+    </>
   );
 }

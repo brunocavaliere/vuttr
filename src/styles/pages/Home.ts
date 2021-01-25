@@ -33,6 +33,8 @@ export const Nav = styled.div`
     border: 1px solid var(--DarkestWhite);
     border-radius: 5px;
 
+    outline: none;
+
     &::placeholder {
       font: var(--Body);
       color: var(--LighterInk);
@@ -47,9 +49,18 @@ export const Nav = styled.div`
     border: none;
     border-radius: 5px;
 
+    cursor: pointer;
+    outline: none;
+
     font: var(--BodySmall);
     letter-spacing: 0.02em;
     color: var(--White);
+
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--DarkBlue);
+    }
   }
 `;
 
@@ -94,6 +105,7 @@ export const Tools = styled.div`
       font: var(--BodySmall);
       color: var(--Red);
 
+      outline: none;
       cursor: pointer;
 
       &:hover {
@@ -102,10 +114,14 @@ export const Tools = styled.div`
     }
   }
 
-  & > p:last-child {
+  & > div:last-child {
     margin-top: 24px;
 
     font: var(--BodySmall);
     font-weight: 600;
+
+    span {
+      margin-right: 16px;
+    }
   }
 `;

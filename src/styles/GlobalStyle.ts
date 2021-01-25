@@ -8,6 +8,7 @@ export default createGlobalStyle`
     --DarkWhite: #FCFCFD;
     --DarkerWhite: #F5F4F6;
     --DarkestWhite: #EBEAED;
+    --MostDarkestWhite: #DEDCE1;
 
     --Ink: #170C3A;
     --LightInk: #8F8A9B;
