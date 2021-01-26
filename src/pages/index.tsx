@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import api from '../services/api';
 
 import ModalAddTool from '../components/ModalAddTool';
+import ModalDeleteTool from '../components/ModalDeleteTool';
 
 import { Container, Nav, Tools } from '../styles/pages/Home';
 
@@ -15,7 +17,11 @@ interface Tool {
 
 export default function Home() {
   const [tools, setTools] = useState<Tool[]>([]);
-  const [modalTool, setModalTool] = useState(false);
+  const [modalAddTool, setModalAddTool] = useState(false);
+  const [modalDeleteTool, setModalDeleteTool] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState<Tool[]>([]);
 
   useEffect(() => {
     async function loadTools(): Promise<void> {
@@ -25,10 +31,22 @@ export default function Home() {
     }
 
     loadTools();
-  }, []);
+  }, [modalAddTool, modalDeleteTool]);
 
-  function handleModalTool() {
-    setModalTool(!modalTool);
+  useEffect(() => {
+    const results = tools.filter(tool =>
+      tool.title.toLowerCase().includes(searchTerm),
+    );
+
+    setSearchResults(results);
+  }, [tools, searchTerm]);
+
+  function handleModalAddTool() {
+    setModalAddTool(!modalAddTool);
+  }
+
+  function handleModalDeleteTool() {
+    setModalDeleteTool(!modalDeleteTool);
   }
 
   async function handleDeleteTool(id: number): Promise<void> {
@@ -37,33 +55,53 @@ export default function Home() {
     setTools(tools.filter(tool => tool.id !== id));
   }
 
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
+    setSearchTerm(event.target.value.toLowerCase());
+  }
+
   return (
     <>
-      {modalTool && (
-        <ModalAddTool modalTool={modalTool} handleModal={handleModalTool} />
+      {modalAddTool && (
+        <ModalAddTool
+          modalTool={modalAddTool}
+          handleModal={handleModalAddTool}
+        />
       )}
 
+      {modalDeleteTool &&
+        tools.map(tool => (
+          <ModalDeleteTool
+            handleDelete={() => handleDeleteTool(tool.id)}
+            modalTool={modalDeleteTool}
+            handleModal={handleModalDeleteTool}
+          />
+        ))}
+
       <Container>
-        <h1>VUTTR!</h1>
+        <h1>VUTTR</h1>
 
         <h3>Very Useful Tools to Remember</h3>
 
         <Nav>
-          <input type="text" placeholder="search" />
+          <input
+            onChange={handleInputChange}
+            type="text"
+            placeholder="search"
+          />
 
-          <button onClick={handleModalTool} type="button">
+          <button onClick={handleModalAddTool} type="button">
             Add
           </button>
         </Nav>
 
-        {tools.map(tool => (
+        {searchResults.map(tool => (
           <Tools>
             <header key={tool.title}>
               <h5>
                 <a href="teste">{tool.title}</a>
               </h5>
 
-              <button onClick={() => handleDeleteTool(tool.id)} type="button">
+              <button onClick={handleModalDeleteTool} type="button">
                 remove
               </button>
             </header>

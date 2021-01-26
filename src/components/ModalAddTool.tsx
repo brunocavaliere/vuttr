@@ -45,13 +45,15 @@ export default function ModalAddTool({ modalTool, handleModal }: Props) {
       link: inputData.link,
       tags: inputData.tags,
     });
+
+    handleModal();
   }
 
   return (
     <Container modalTool={modalTool}>
       <form onSubmit={handleAddTool}>
         <nav>
-          <h3>Add new tool</h3>
+          <h4>Add new tool</h4>
 
           <button onClick={handleModal} type="button">
             <svg

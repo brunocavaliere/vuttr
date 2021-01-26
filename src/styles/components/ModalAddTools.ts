@@ -30,7 +30,6 @@ export const Container = styled.div<ContainerProps>`
   form {
     max-width: 570px;
     width: 100%;
-    z-index: 10;
 
     padding: 32px 64px;
 

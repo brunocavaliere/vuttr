@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: 80px 32px;
 
   h1 {
     margin-bottom: 12px;
@@ -115,12 +115,16 @@ export const Tools = styled.div`
   }
 
   & > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+
     margin-top: 24px;
 
     font: var(--BodySmall);
     font-weight: 600;
 
     span {
+      margin-top: 16px;
       margin-right: 16px;
     }
   }
